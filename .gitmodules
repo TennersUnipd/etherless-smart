@@ -1,0 +1,3 @@
+[submodule "sharedConfig"]
+	path = sharedConfig
+	url = git@github.com:TennersUnipd/applicationConfigs.git
