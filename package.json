@@ -1,0 +1,22 @@
+{
+  "name": "etherless-smart",
+  "version": "0.1.0",
+  "description": "This is the smart contract module of the etherless project",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TennersUnipd/etherless-smart.git"
+  },
+  "author": "TennersUnipd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TennersUnipd/etherless-smart/issues"
+  },
+  "homepage": "https://github.com/TennersUnipd/etherless-smart#readme"
+}
