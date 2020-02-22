@@ -1,0 +1,21 @@
+name: Solidity Testing
+
+on: [push, pull-request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+      - run: npm install
+      - run: npm test
+      - run: npm install -g truffle
+      - run: npm install -g ganache-cli
+      - run: npm install -g solc@0.5.12
+      - run: ganache-cli -q &
+      - run: truffle build
+      - run: truffle migrate
+      - run: truffle test
