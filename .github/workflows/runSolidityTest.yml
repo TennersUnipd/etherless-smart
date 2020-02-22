@@ -10,8 +10,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: npm install
-      - run: npm test
       - run: npm install -g truffle
       - run: npm install -g ganache-cli
       - run: npm install -g solc@0.5.12
