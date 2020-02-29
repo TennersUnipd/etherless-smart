@@ -43,8 +43,8 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: "localhost",
-      port: 7545,
+      host: "taverna.pettinato.eu",
+      port: 8545,
       network_id: "*", // Match any network id
       gas: 4600000
     },
