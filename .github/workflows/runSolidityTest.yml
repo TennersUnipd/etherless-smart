@@ -13,7 +13,3 @@ jobs:
       - run: npm install -g truffle
       - run: npm install -g ganache-cli
       - run: npm install -g solc@0.5.12
-      - run: ganache-cli -q &
-      - run: truffle build
-      - run: truffle migrate
-      - run: truffle test

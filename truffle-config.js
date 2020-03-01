@@ -43,11 +43,17 @@ module.exports = {
     // options below to some value.
     //
     development: {
-      host: "taverna.pettinato.eu",
+      host: "localhost",
       port: 8545,
       network_id: "*", // Match any network id
       gas: 4600000
     },
+    pocNetwork:{
+      host: "taverna.pettinato.eu",
+      port: 8545,
+      network_id: "*", // Match any network id
+      gas: 4600000
+    }
 
 
     // Another network with more advanced options...
