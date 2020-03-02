@@ -22,13 +22,13 @@ contract EtherlessSmart {
     mapping(address => string[]) private userFunctionNames;
 
     /* EVENTS */
-    event RemoteExec(string _name, string _parameters);
-    event RemoteResponse(string _response);
+    event RemoteExec(string _name, string _parameters, string _identifier);
+    event RemoteResponse(string _response, string _identifier);
 
     // require, assert, revert
 
     /* PUBLIC INTERFACES */
-    function execFunctionRequest(string memory fnName, string memory paramers)
+    function execFunctionRequest(string memory fnName, string memory paramers, string memory identifier)
         public
         payable
     {
@@ -59,7 +59,7 @@ contract EtherlessSmart {
         }
 
         // pretend to be calling function from aws
-        execRemoteRequest(fnRequested.remoteResource, paramers);
+        execRemoteRequest(fnRequested.remoteResource, paramers, identifier);
         // add timer or something that will trigger "Unable to call remote execution"
         /*bool remoteTriggerSuccess = true;
         if (!remoteTriggerSuccess) {
@@ -111,16 +111,16 @@ contract EtherlessSmart {
     }
 
     // send event that will trigger remote execution
-    function execRemoteRequest(string memory remoteName, string memory paramers)
+    function execRemoteRequest(string memory remoteName, string memory paramers, string memory identifier)
         private
     {
-        emit RemoteExec(remoteName, paramers);
+        emit RemoteExec(remoteName, paramers, identifier);
     }
 
     // remove execution will return result via this call
     // result will be emitted to eth-cli
-    function execRemoteResponse(string memory result) public {
-        emit RemoteResponse(result);
+    function execRemoteResponse(string memory result, string memory identifier) public {
+        emit RemoteResponse(result, identifier);
     }
 
     /* PRIVATE FUNCTIONS */
