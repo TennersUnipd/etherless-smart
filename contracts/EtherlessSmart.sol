@@ -75,9 +75,7 @@ contract EtherlessSmart {
         return availableFunctionNames;
     }
 
-    // TODO: remove creator address (taken from caller), kept for easy development
     function createFunction(
-        address payable creator,
         string memory fnName,
         string memory description,
         string memory prototype,
@@ -92,7 +90,7 @@ contract EtherlessSmart {
             description: description,
             prototype: prototype,
             cost: cost,
-            owner: creator,
+            owner: msg.sender,
             remoteResource: remoteResource
         });
         storeFunction(newFn);
