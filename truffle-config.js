@@ -42,19 +42,24 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    development: {
+    local: {
       host: "localhost",
       port: 8545,
       network_id: "*", // Match any network id
       gas: 4600000
     },
-    pocNetwork:{
+    test:{
       host: "taverna.pettinato.eu",
       port: 8545,
       network_id: "*", // Match any network id
       gas: 4600000
-    }
-
+    },
+    stage: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*", // Match any network id
+      gas: 4600000
+    },
 
     // Another network with more advanced options...
     // advanced: {
