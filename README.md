@@ -1,6 +1,6 @@
 # Etherless-Smart
 
-This is the smart contract component of the Etherless project that you can find [here](Https://repo)
+This is the smart contract component of the Etherless project that you can find [here](https://github.com/TennersUnipd/etherless)
 
 ## Requirements
 To make it work you need to install:
