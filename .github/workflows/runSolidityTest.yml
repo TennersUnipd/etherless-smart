@@ -12,4 +12,8 @@ jobs:
           node-version: '12.x'
       - run: npm install -g truffle
       - run: npm install -g ganache-cli
-      - run: npm install -g solc@0.5.12
+      - run: ganache-cli & 
+      - run: npm install --dotenv-extended
+      - run: truffle build
+      - run: truffle deploy --network local
+      - run: truffle test --network local 
