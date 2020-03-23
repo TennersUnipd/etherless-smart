@@ -4,8 +4,7 @@ var FNStorage = artifacts.require("./FunctionsStorage.sol");
 
 module.exports = function (deployer) {
     deployer.deploy(UtilsLib);
-    deployer.link(UtilsLib, FNStorage);
+    deployer.link(UtilsLib, [FNStorage, EtherlessSmart]);
     deployer.deploy(FNStorage);
-    deployer.link(FNStorage, EtherlessSmart);
     deployer.deploy(EtherlessSmart);
 };
