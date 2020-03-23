@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0 <0.7.0;
 pragma experimental ABIEncoderV2;
 
-import { Utils } from '../libraries/utils.sol';
+import { Utils } from './utils.sol';
 
 contract FunctionsStorage {
     mapping(string => Utils.Function) private deployedFunctions; // <nome funzione> -> <Function>
@@ -31,7 +31,7 @@ contract FunctionsStorage {
     }
 
     function storeFunction(Utils.Function memory fn)
-        private
+        public
     {
         // check if function already exists before adding it to the availableFunctionNames
         if (existsFunction(fn.name)) {

@@ -1,6 +1,7 @@
 pragma solidity >=0.5.0 <0.7.0;
 pragma experimental ABIEncoderV2;
 
+import { Utils } from './utils.sol';
 import './FunctionsStorage.sol';
 
 contract EtherlessSmart {
@@ -21,5 +22,19 @@ contract EtherlessSmart {
         returns (string[] memory functionNames)
     {
         return fnStorage.getFunctions();
+    }
+
+    function createFunction(string memory fnName)
+        public
+    {
+        Utils.Function memory fn = Utils.Function({
+            name: fnName,
+            description: 'temp',
+            prototype: 'temp',
+            cost: 1,
+            owner: msg.sender,
+            remoteResource: 'tmp'
+        });
+        fnStorage.storeFunction(fn);
     }
 }
