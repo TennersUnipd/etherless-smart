@@ -24,6 +24,14 @@ contract EtherlessSmart {
         return fnStorage.getFunctions();
     }
 
+    function findFunctions(string memory fnToSearch)
+        public
+        view
+        returns (Utils.Function memory)
+    {
+        return fnStorage.getFunctionDetails(fnToSearch);
+    }
+
     function createFunction(string memory fnName)
         public
     {

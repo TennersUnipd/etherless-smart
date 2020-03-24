@@ -16,7 +16,22 @@ contract FunctionsStorage {
         return availableFunctionNames;
     }
 
-    // check if functino with given name exists
+    function getFunctionDetails(string memory functionToSearch)
+        public
+        view
+        returns (Utils.Function memory)
+    {
+        bool found = false;
+        for (uint256 i = 0; i < availableFunctionNames.length; i++) {
+            found = (Utils.compareStrings(availableFunctionNames[i], functionToSearch));
+            if (found) {
+                return deployedFunctions[availableFunctionNames[i]];
+            }   
+        }
+        revert('Function non found');
+    }
+
+    // check if function with given name exists and return true or false
     function existsFunction(string memory named)
         private
         view
@@ -29,6 +44,8 @@ contract FunctionsStorage {
         }
         return found;
     }
+
+
 
     function storeFunction(Utils.Function memory fn)
         public
