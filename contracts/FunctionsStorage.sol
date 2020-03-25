@@ -33,7 +33,7 @@ contract FunctionsStorage {
 
     // check if function with given name exists and return true or false
     function existsFunction(string memory named)
-        private
+        public
         view
         returns (bool)
     {

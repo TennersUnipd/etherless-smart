@@ -32,16 +32,24 @@ contract EtherlessSmart {
         return fnStorage.getFunctionDetails(fnToSearch);
     }
 
-    function createFunction(string memory fnName)
+    function createFunction(string memory fnName,
+        string memory description,
+        string memory prototype,
+        string memory remoteResource,
+        uint256 cost)
         public
     {
+        require(cost>0,"Need a cost > 0");
+        if (fnStorage.existsFunction(fnName)){
+            revert("Error");
+        }
         Utils.Function memory fn = Utils.Function({
             name: fnName,
-            description: 'temp',
-            prototype: 'temp',
-            cost: 1,
+            description: description,
+            prototype: prototype,
+            cost: cost,
             owner: msg.sender,
-            remoteResource: 'tmp'
+            remoteResource: remoteResource
         });
         fnStorage.storeFunction(fn);
     }
