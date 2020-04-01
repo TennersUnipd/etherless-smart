@@ -66,4 +66,25 @@ contract FunctionsStorage {
         Utils.Function memory fnRequested = getFunctionDetails(fnName);
         return fnRequested.cost;
     }
+
+    function buildFunction(
+        string memory name,
+        string memory description,
+        string memory prototype,
+        uint256 cost,
+        string memory remoteResource,
+        address payable owner)
+        public
+        pure
+        returns (Utils.Function memory)
+    {
+        return Utils.Function({
+            name: name,
+            description: description,
+            prototype: prototype,
+            cost: cost,
+            owner: owner,
+            remoteResource: remoteResource
+        });
+    }
 }

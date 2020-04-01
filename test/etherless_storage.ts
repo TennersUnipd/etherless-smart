@@ -1,5 +1,4 @@
 var FunctionsStorage = artifacts.require("FunctionsStorage");
-var UtilsLib = artifacts.require("../contracts/utils.sol");
 
 contract("FunctionsStorage", (accounts) => {
     const [bob] = accounts;
@@ -13,8 +12,8 @@ contract("FunctionsStorage", (accounts) => {
 
     it("should correctly add a function", async () => {
         let storage = await FunctionsStorage.deployed();
-        let utils = await UtilsLib.deployed();
-        const fn = await utils.buildFunction(functionName, "description", "proto", 2, "remote", bob);
+
+        const fn = await storage.buildFunction(functionName, "description", "proto", 2, "remote", bob);
         await storage.storeFunction(fn);
         const storedFunctions = await storage.getFunctions();
         assert.equal(storedFunctions.length, 1, "Storage is empty");
@@ -25,9 +24,9 @@ contract("FunctionsStorage", (accounts) => {
 
     it("should be unable to add function that already exists", async () => {
         const fnName = "test_23";
-        let utils = await UtilsLib.deployed();
+
         let storage = await FunctionsStorage.deployed();
-        const fn = await utils.buildFunction(fnName, "description", "proto", 2, "remote", bob);
+        const fn = await storage.buildFunction(fnName, "description", "proto", 2, "remote", bob);
         await storage.storeFunction(fn);
         try {
             await storage.storeFunction(fn);
@@ -40,9 +39,9 @@ contract("FunctionsStorage", (accounts) => {
 
     it("should recognize function that alrady exists", async () => {
         const fnName = "exists_test";
-        let utils = await UtilsLib.deployed();
+
         let storage = await FunctionsStorage.deployed();
-        const fn = await utils.buildFunction(fnName, "description", "proto", 2, "remote", bob);
+        const fn = await storage.buildFunction(fnName, "description", "proto", 2, "remote", bob);
         await storage.storeFunction(fn);
         const exists = await storage.existsFunction(fnName);
         assert.equal(exists, true, "Function does not exist");
@@ -51,8 +50,8 @@ contract("FunctionsStorage", (accounts) => {
     it("should correctly find a stored function", async () => {
         const functionName = "test_name_exists_in_storage";
         let instance = await FunctionsStorage.deployed();
-        let utils = await UtilsLib.deployed();
-        const fn = await utils.buildFunction(functionName, "description", "proto", 2, "remote", bob);
+
+        const fn = await instance.buildFunction(functionName, "description", "proto", 2, "remote", bob);
         await instance.storeFunction(fn);
         try {
             const functionFound = await instance.getFunctionDetails(functionName);
@@ -70,8 +69,7 @@ contract("FunctionsStorage", (accounts) => {
         const functionName = "test_name_cost_fn_in_storage";
         const cost = 3;
         let instance = await FunctionsStorage.deployed();
-        let utils = await UtilsLib.deployed();
-        const fn = await utils.buildFunction(functionName, "description", "proto", cost, "remote", bob);
+        const fn = await instance.buildFunction(functionName, "description", "proto", cost, "remote", bob);
         await instance.storeFunction(fn);
         try {
             const retrievedCost = await instance.costOfFunction(functionName);
