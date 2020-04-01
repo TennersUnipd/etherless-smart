@@ -8,7 +8,7 @@ contract EtherlessSmart {
 
     FunctionsStorage private fnStorage;
 
-    uint256 balance = 0;
+    uint256 private balance = 0;
 
     /* EVENTS */
     event RemoteExec(string _name, string _parameters, string _identifier);
@@ -16,6 +16,12 @@ contract EtherlessSmart {
 
     constructor () public {
         fnStorage = new FunctionsStorage();
+    }
+
+    function getBalance()
+        public view
+        returns (uint256) {
+            return balance;
     }
 
     function listFunctions()
@@ -97,6 +103,13 @@ contract EtherlessSmart {
         emit RemoteResponse(result, identifier);
     }
 
+    function costOfFunction(string memory fnName)
+        public
+        view
+        returns (uint256 cost)
+    {
+        return fnStorage.costOfFunction(fnName);
+    }
 }
 
 
