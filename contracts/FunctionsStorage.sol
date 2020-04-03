@@ -4,14 +4,24 @@ pragma experimental ABIEncoderV2;
 import { Utils } from './utils.sol';
 
 contract FunctionsStorage {
-    mapping(string => Utils.Function) private deployedFunctions; // <nome funzione> -> <Function>
+
+    struct Function {
+        string name;
+        string description;
+        string prototype;
+        uint256 cost; // in wei
+        address payable owner;
+        string remoteResource;
+    }
+
+    mapping(string => Function) private deployedFunctions; // <nome funzione> -> <Function>
     string[] private availableFunctionNames;
     mapping(address => string[]) private userFunctionNames;
 
     function getFunctionDetails(string memory functionToSearch)
         public
         view
-        returns (Utils.Function memory)
+        returns (Function memory)
     {
         bool found = false;
         for (uint256 i = 0; i < availableFunctionNames.length; i++) {
@@ -37,7 +47,7 @@ contract FunctionsStorage {
         return found;
     }
 
-    function storeFunction(Utils.Function memory fn)
+    function storeFunction(Function memory fn)
         public
     {
         // check if function already exists before adding it to the availableFunctionNames
@@ -63,7 +73,7 @@ contract FunctionsStorage {
         view
         returns (uint256 cost)
     {
-        Utils.Function memory fnRequested = getFunctionDetails(fnName);
+        Function memory fnRequested = getFunctionDetails(fnName);
         return fnRequested.cost;
     }
 
@@ -76,9 +86,9 @@ contract FunctionsStorage {
         address payable owner)
         public
         pure
-        returns (Utils.Function memory)
+        returns (Function memory)
     {
-        return Utils.Function({
+        return Function({
             name: name,
             description: description,
             prototype: prototype,

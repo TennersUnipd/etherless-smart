@@ -3,15 +3,6 @@ pragma experimental ABIEncoderV2;
 
 library Utils {
 
-    struct Function {
-        string name;
-        string description;
-        string prototype;
-        uint256 cost; // in wei
-        address payable owner;
-        string remoteResource;
-    }
-
     function compareStrings(string memory a, string memory b)
         public
         pure

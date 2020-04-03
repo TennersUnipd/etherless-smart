@@ -35,7 +35,7 @@ contract EtherlessSmart {
     function findFunctions(string memory fnToSearch)
         public
         view
-        returns (Utils.Function memory)
+        returns (FunctionsStorage.Function memory)
     {
         return fnStorage.getFunctionDetails(fnToSearch);
     }
@@ -51,7 +51,7 @@ contract EtherlessSmart {
         if (fnStorage.existsFunction(fnName)){
             revert("Error");
         }
-        Utils.Function memory fn = Utils.Function({
+        FunctionsStorage.Function memory fn = FunctionsStorage.Function({
             name: fnName,
             description: description,
             prototype: prototype,
@@ -73,7 +73,7 @@ contract EtherlessSmart {
         // check if function with given name exists
 
         // get function data
-        Utils.Function memory fnRequested = fnStorage.getFunctionDetails(fnName);
+        FunctionsStorage.Function memory fnRequested = fnStorage.getFunctionDetails(fnName);
 
         // check if correct ether amount sent by caller
         uint256 fnCostToRun = fnRequested.cost;
