@@ -13,3 +13,14 @@ jobs:
       - run: npm install -g truffle
       - run: npm install -g ganache-cli
       - run: npm install -g solc@0.5.12
+      - run: ganache-cli &
+      - run: truffle build
+      - run: truffle deploy --network local
+      - run: truffle test --network local
+      - run: truffle run coverage
+
+      - name: Upload CodeCoverage output as a build artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: CodeCoverage
+          path: coverage
