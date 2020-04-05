@@ -1,4 +1,4 @@
-var UtilsLib = artifacts.require("../contracts/utils.sol");
+var UtilsLib = artifacts.require("../contracts/Utils.sol");
 
 contract("Utils", () => {
     it("[compareStrings] should be able to compare two strings that are equal", async () => {
@@ -20,6 +20,6 @@ contract("Utils", () => {
     it("[uint2str] correctly converts an integer to its string form", async () => {
         let utils = await UtilsLib.deployed();
         let result = await utils.uint2str(1);
-        assert.equal(result, "1", "The string rapresentation does not match integer value");
+        assert.equal(result, "1", "The string representation does not match integer value");
     });
 });

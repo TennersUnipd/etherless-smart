@@ -44,14 +44,14 @@ contract("FunctionsStorage", (accounts) => {
         await storage.storeFunction(fn);
         try {
             await storage.storeFunction(fn);
-            assert.fail("Function added successufly even if it already exists");
+            assert.fail("Function added successfully even if it already exists");
         }
         catch{
             assert.isOk(true);
         }
     });
 
-    it("should recognize function that alrady exists", async () => {
+    it("should recognize function that already exists", async () => {
         const fnName = "exists_test";
 
         let storage = await FunctionsStorage.deployed();
@@ -70,7 +70,7 @@ contract("FunctionsStorage", (accounts) => {
         try {
             const functionFound = await instance.getFunctionDetails(functionName);
             assert.equal(functionFound.name, functionName, "Functions names not matching");
-            assert.equal(functionFound.description, "description", "Functions descrptions not matching");
+            assert.equal(functionFound.description, "description", "Functions descriptions not matching");
             assert.equal(functionFound.prototype, "proto", "Functions proto not matching");
             assert.equal(functionFound.remoteResource, "remote", "Functions remote resource not matching");
             assert.equal(functionFound.cost, 2, "Functions cost not matching");

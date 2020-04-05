@@ -39,7 +39,8 @@ module.exports = {
    */
   
   plugins: [
-    'truffle-plugin-verify'
+    'truffle-plugin-verify',
+    "solidity-coverage"
   ],
   api_keys: {
     etherscan: 'RKVYFCZNF8HW6MSGXFDNIV7E6Q9BZQSSTI'

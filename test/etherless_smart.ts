@@ -47,7 +47,7 @@ contract("EtherlessSmart", (accounts) => {
         try {
             const functionFound = await instance.findFunction(functionName);
             assert.equal(functionFound.name, functionName, "Functions names not matching");
-            assert.equal(functionFound.description, "description", "Functions descrptions not matching");
+            assert.equal(functionFound.description, "description", "Functions descriptions not matching");
             assert.equal(functionFound.prototype, "proto", "Functions proto not matching");
             assert.equal(functionFound.remoteResource, "remote", "Functions remote resource not matching");
             assert.equal(functionFound.cost, 2 + Number(SERVICE_FEE), "Functions cost not matching");

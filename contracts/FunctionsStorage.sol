@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0 <0.7.0;
 pragma experimental ABIEncoderV2;
 
-import { Utils } from './utils.sol';
+import { Utils } from './Utils.sol';
 
 contract FunctionsStorage {
 

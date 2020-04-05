@@ -24,7 +24,8 @@
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-plugin-import": "^2.20.1",
+    "solidity-coverage": "^0.7.2"
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.0.33",
