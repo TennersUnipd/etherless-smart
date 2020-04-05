@@ -16,11 +16,16 @@ contract("EtherlessSmart", (accounts) => {
     });
     it("[createFunctions] should add correctly a new function", async () => {
         const functionName = "test_name_insert_fn";
-        const instance = await EtherlessSmart.deployed();
+        const instance = await EtherlessSmart.new();
         await instance.createFunction(functionName, "description", "proto", "remote", 2);
         const storedFunctions = await instance.listFunctions();
         assert.equal(storedFunctions.length, 1, "Storage is empty");
-        assert.include(storedFunctions, functionName, "Stored function name does not match");
+        const func = storedFunctions[0];
+        assert.include(func.name, functionName, "Stored function name does not match");
+        assert.include(func.description, "description", "Stored function description does not match");
+        assert.include(func.remoteResource, "remote", "Stored remote resource description does not match");
+        assert.include(func.cost, 2, "Stored function cost does not match");
+        assert.include(func.prototype, "proto", "Stored function prototype does not match");
     });
 
     it("[listFunctions] should correctly return stored functions", async () => {
@@ -31,8 +36,8 @@ contract("EtherlessSmart", (accounts) => {
         await instance.createFunction(secondaryFunctionName, "description", "proto", "remote", 2);
         const storedFunctions = await instance.listFunctions();
         assert.equal(storedFunctions.length, 2, "Storage is empty");
-        assert.include(storedFunctions, functionName, "Stored function name does not match");
-        assert.include(storedFunctions, secondaryFunctionName, "Stored function name does not match");
+        assert.include(storedFunctions[0], functionName, "Stored function name does not match");
+        assert.include(storedFunctions[1], secondaryFunctionName, "Stored function name does not match");
     });
 
     it("[findFunction] should correctly find a stored function", async () => {

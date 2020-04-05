@@ -2,7 +2,6 @@ var FunctionsStorage = artifacts.require("FunctionsStorage");
 
 contract("FunctionsStorage", (accounts) => {
     const [bob] = accounts;
-    const functionName = "test_fn";
 
     it("at start, storage should be empty", async () => {
         let storage = await FunctionsStorage.deployed();
@@ -12,14 +11,29 @@ contract("FunctionsStorage", (accounts) => {
 
     it("should correctly add a function", async () => {
         let storage = await FunctionsStorage.deployed();
-
+        const functionName = "test_sdd_fn";
         const fn = await storage.buildFunction(functionName, "description", "proto", 2, "remote", bob);
         await storage.storeFunction(fn);
         const storedFunctions = await storage.getFunctions();
         assert.equal(storedFunctions.length, 1, "Storage is empty");
-        assert.equal(storedFunctions[0], functionName, "Stored function name does not match");
+        assert.equal(storedFunctions[0].name, functionName, "Stored function name does not match");
         const exists = await storage.existsFunction(functionName);
         assert.equal(exists, true, "Function does not exist");
+    });
+
+    it("[getFunctions] should correctly retrieve a function", async () => {
+        let storage = await FunctionsStorage.new();
+        const functionName = "test_retrieve_fn";
+        const fn = await storage.buildFunction(functionName, "description", "proto", 2, "remote", bob);
+        await storage.storeFunction(fn);
+        const storedFunctions = await storage.getFunctions();
+        assert.equal(storedFunctions.length, 1, "Storage is empty");
+        const retrieved = storedFunctions[0];
+        assert.equal(retrieved.name, functionName, "Stored function name does not match");
+        assert.equal(retrieved.description, "description", "Stored function description does not match");
+        assert.equal(retrieved.prototype, "proto", "Stored function prototype does not match");
+        assert.equal(retrieved.cost, 2, "Stored function cost does not match");
+        assert.equal(retrieved.remoteResource, "remote", "Stored function remoteResource does not match");
     });
 
     it("should be unable to add function that already exists", async () => {

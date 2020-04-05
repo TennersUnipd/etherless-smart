@@ -68,9 +68,14 @@ contract FunctionsStorage {
     function getFunctions()
         public
         view
-        returns (string[] memory functionNames)
+        returns (Function[] memory functionNames)
     {
-        return availableFunctionNames;
+        uint totalFunctions = availableFunctionNames.length;
+        Function[] memory results = new Function[](totalFunctions);
+        for (uint256 i = 0; i < totalFunctions; i++) {
+            results[i] = deployedFunctions[availableFunctionNames[i]];
+        }
+        return results;
     }
 
     function costOfFunction(string memory fnName)

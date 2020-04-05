@@ -28,7 +28,7 @@ contract EtherlessSmart {
     function listFunctions()
         public
         view
-        returns (string[] memory functionNames)
+        returns (FunctionsStorage.Function[] memory functionNames)
     {
         return fnStorage.getFunctions();
     }
