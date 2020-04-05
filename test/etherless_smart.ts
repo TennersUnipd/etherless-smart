@@ -1,5 +1,7 @@
 const EtherlessSmart = artifacts.require("EtherlessSmart");
 
+const SERVICE_FEE = 10;
+
 contract("EtherlessSmart", (accounts) => {
     const [bob, alice] = accounts;
     it("should verify the absence of any function on first deploy", async () => {
@@ -38,14 +40,25 @@ contract("EtherlessSmart", (accounts) => {
         const instance = await EtherlessSmart.new();
         await instance.createFunction(functionName, "description", "proto", "remote", 2);
         try {
-            const functionFound = await instance.findFunctions(functionName);
+            const functionFound = await instance.findFunction(functionName);
             assert.equal(functionFound.name, functionName, "Functions names not matching");
             assert.equal(functionFound.description, "description", "Functions descrptions not matching");
             assert.equal(functionFound.prototype, "proto", "Functions proto not matching");
             assert.equal(functionFound.remoteResource, "remote", "Functions remote resource not matching");
-            assert.equal(functionFound.cost, 2, "Functions cost not matching");
+            assert.equal(functionFound.cost, 2 + Number(SERVICE_FEE), "Functions cost not matching");
         } catch {
             assert.fail("Function not found even if it was created");
+        }        
+    });
+
+    it("[findFunction] should correctly handle a not found function", async () => {
+        const functionName = "test_name_not_found_fn";
+        const instance = await EtherlessSmart.deployed();
+        try {
+            const functionFound = await instance.findFunction(functionName);
+            assert.fail("Function does not exist");
+        } catch (e) {
+            assert.isOk(true, "Function was found");
         }        
     });
 
@@ -73,7 +86,7 @@ contract("EtherlessSmart", (accounts) => {
         await instance.createFunction(functionName, "description", "proto", "remote", cost);
         try {
             const retrievedCost = await instance.costOfFunction(functionName);
-            assert.equal(retrievedCost, cost, "Functions have different costs");
+            assert.equal(retrievedCost, cost + SERVICE_FEE, "Functions have different costs");
         } catch {
             assert.fail("Function not found even if it was created");
         }        
@@ -81,7 +94,7 @@ contract("EtherlessSmart", (accounts) => {
 
     it("[runFunction] contract balance increment should meet expectancy", async () => {
         const functionName = "test_name_balance_fn";
-        const estimatedContractIncrement = Number(0);
+        const estimatedContractIncrement = Number(SERVICE_FEE);
         const instance = await EtherlessSmart.deployed();
         const initialBalance = Number(await instance.getBalance());
         try {

@@ -23,14 +23,23 @@ contract FunctionsStorage {
         view
         returns (Function memory)
     {
-        bool found = false;
-        for (uint256 i = 0; i < availableFunctionNames.length; i++) {
-            found = (Utils.compareStrings(availableFunctionNames[i], functionToSearch));
-            if (found) {
-                return deployedFunctions[availableFunctionNames[i]];
-            }
+        (uint256 index, bool exists) = indexOfFunction(functionToSearch);
+        if (!exists) {
+            revert("Function not found");
         }
-        revert('Function non found');
+        return deployedFunctions[availableFunctionNames[index]];
+    }
+
+    function indexOfFunction(string memory named)
+        private
+        view
+        returns (uint256, bool)
+    {
+        for (uint256 i = 0; i < availableFunctionNames.length; i++) {
+            if (Utils.compareStrings(availableFunctionNames[i], named))
+                return(i,true);
+        }
+        return(0,false);
     }
 
     // check if function with given name exists and return true or false
@@ -39,12 +48,8 @@ contract FunctionsStorage {
         view
         returns (bool)
     {
-        bool found = false;
-        for (uint256 i = 0; i < availableFunctionNames.length; i++) {
-            found = (Utils.compareStrings(availableFunctionNames[i], named));
-            if (found) break;
-        }
-        return found;
+        (, bool exists) = indexOfFunction(named);
+        return exists;
     }
 
     function storeFunction(Function memory fn)

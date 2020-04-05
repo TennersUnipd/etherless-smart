@@ -9,6 +9,7 @@ contract EtherlessSmart {
     FunctionsStorage private fnStorage;
 
     uint256 private balance = 0;
+    uint256 private serviceCostPerFunctionExecution = 10;
 
     /* EVENTS */
     event RemoteExec(string _name, string _parameters, string _identifier);
@@ -32,12 +33,14 @@ contract EtherlessSmart {
         return fnStorage.getFunctions();
     }
 
-    function findFunctions(string memory fnToSearch)
+    function findFunction(string memory fnToSearch)
         public
         view
         returns (FunctionsStorage.Function memory)
     {
-        return fnStorage.getFunctionDetails(fnToSearch);
+        FunctionsStorage.Function memory fn = fnStorage.getFunctionDetails(fnToSearch);
+        fn.cost = fn.cost + serviceCostPerFunctionExecution;
+        return fn;
     }
 
     function createFunction(string memory fnName,
@@ -47,9 +50,8 @@ contract EtherlessSmart {
         uint256 cost)
         public
     {
-        require(cost>0,"Need a cost > 0");
         if (fnStorage.existsFunction(fnName)){
-            revert("Error");
+            revert("Function not found");
         }
         FunctionsStorage.Function memory fn = FunctionsStorage.Function({
             name: fnName,
@@ -76,7 +78,7 @@ contract EtherlessSmart {
         FunctionsStorage.Function memory fnRequested = fnStorage.getFunctionDetails(fnName);
 
         // check if correct ether amount sent by caller
-        uint256 fnCostToRun = fnRequested.cost;
+        uint256 fnCostToRun = costOfFunction(fnName);
         uint256 amountSentByCaller = msg.value; // rappresenta il quantitativo di soldi inviati dall'utente a questa funzione
         require(
             amountSentByCaller == fnCostToRun,
@@ -86,7 +88,7 @@ contract EtherlessSmart {
             )
         );
         balance += amountSentByCaller;
-        moveCurrencies(fnRequested.owner, fnCostToRun);
+        moveCurrencies(fnRequested.owner, fnRequested.cost);
         
 
         emit RemoteExec(fnRequested.remoteResource, paramers, identifier);
@@ -108,7 +110,7 @@ contract EtherlessSmart {
         view
         returns (uint256 cost)
     {
-        return fnStorage.costOfFunction(fnName);
+        return fnStorage.costOfFunction(fnName) + serviceCostPerFunctionExecution;
     }
 }
 
