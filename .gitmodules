@@ -1,3 +1,0 @@
-[submodule "build/contracts"]
-	path = build/contracts
-	url = git@github.com:TennersUnipd/applicationConfigs.git
