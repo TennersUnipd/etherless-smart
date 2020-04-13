@@ -26,6 +26,9 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const privateKeys = ["d1c0d1b70bb0b5215b6cc54cf8f872a99002476cd4be8c013f7f7ed5bc341546"];
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -36,7 +39,14 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
+  
+  plugins: [
+    'truffle-plugin-verify',
+    "solidity-coverage"
+  ],
+  api_keys: {
+    etherscan: 'RKVYFCZNF8HW6MSGXFDNIV7E6Q9BZQSSTI'
+  },
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -51,10 +61,10 @@ module.exports = {
       gas: 4600000,
     },
     test: {
-      host: 'taverna.pettinato.eu',
-      port: 8545,
-      network_id: '*', // Match any network id
-      gas: 4600000,
+      provider: function() {
+        return new HDWalletProvider(privateKeys, "https://ropsten.infura.io/v3/f065353f3ff14efa80c5be0cf4cc6655", 0, 1)
+      },
+      network_id: 3
     },
     stage: {
       host: 'localhost',

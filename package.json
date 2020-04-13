@@ -24,11 +24,11 @@
     "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-plugin-import": "^2.20.1",
+    "solidity-coverage": "^0.7.2"
   },
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.0.32",
-    "dotenv": "^8.2.0",
-    "typescript": "^3.6.5"
+    "@truffle/hdwallet-provider": "^1.0.33",
+    "truffle-plugin-verify": "^0.3.9"
   }
 }
