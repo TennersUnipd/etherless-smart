@@ -1,4 +1,4 @@
-const EtherlessSmart = artifacts.require("EtherlessSmart");
+const EtherlessSmart = artifacts.require('EtherlessSmart');
 
 const SERVICE_FEE = 10;
 
