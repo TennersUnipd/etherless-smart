@@ -1,5 +1,3 @@
-require('dotenv').config();
-const HDWalletProvider = require('@truffle/hdwallet-provider');
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -55,10 +53,10 @@ module.exports = {
     // options below to some value.
     //
     local: {
-      host: 'localhost',
+      host: "localhost",
       port: 8545,
-      network_id: '*', // Match any network id
-      gas: 4600000,
+      network_id: "*", // Match any network id
+      gas: 4600000
     },
     test: {
       provider: function() {
@@ -67,16 +65,10 @@ module.exports = {
       network_id: 3
     },
     stage: {
-      host: 'localhost',
+      host: "localhost",
       port: 8545,
-      network_id: '*', // Match any network id
-      gas: 4600000,
-    },
-    ropsten: {
-      provider() {
-        return new HDWalletProvider(process.env.MNEMONIC, `https://ropsten.infura.io/v3/${process.env.PID}`, 0);
-      },
-      network_id: 3,
+      network_id: "*", // Match any network id
+      gas: 4600000
     },
 
     // Another network with more advanced options...
@@ -116,7 +108,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: '0.5.12', // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.5.12",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -125,6 +117,6 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    },
-  },
-};
+    }
+  }
+}
