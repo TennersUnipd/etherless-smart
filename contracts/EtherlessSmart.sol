@@ -94,6 +94,15 @@ contract EtherlessSmart {
         emit RemoteExec(fnRequested.remoteResource, paramers, identifier);
     }
 
+    function deleteFunction(string memory nameFunction)
+        public
+    {
+    FunctionsStorage.Function memory fn = findFunction(nameFunction);
+        if(msg.sender != fn.owner){
+            revert('You are not the owner of the function!');
+        }
+        fnStorage.deleteFunction(fn.owner, nameFunction);
+    }
     function moveCurrencies(address payable receiver, uint256 amount)
         private
     {
