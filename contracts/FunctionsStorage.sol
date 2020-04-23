@@ -78,6 +78,21 @@ contract FunctionsStorage {
         return results;
     }
 
+    function setFunction(string memory fnName,
+        string memory description,
+        string memory prototype,
+        uint256 cost
+        )
+        public
+        {
+        if (!existsFunction(fnName)) {
+            revert("Function doesn't exist");
+        }
+        deployedFunctions[fnName].description = description;
+        deployedFunctions[fnName].prototype = prototype;
+        deployedFunctions[fnName].cost = cost;
+        }
+
     function costOfFunction(string memory fnName)
         public
         view

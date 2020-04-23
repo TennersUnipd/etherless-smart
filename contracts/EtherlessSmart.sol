@@ -94,6 +94,16 @@ contract EtherlessSmart {
         emit RemoteExec(fnRequested.remoteResource, paramers, identifier);
     }
 
+    function setFunction(string memory fnName,
+        string memory description,
+        string memory prototype,
+        uint256 cost)
+        public
+    {
+        fnStorage.setFunction(fnName, description, prototype,cost);
+    }
+
+
     function moveCurrencies(address payable receiver, uint256 amount)
         private
     {
