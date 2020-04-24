@@ -89,7 +89,6 @@ contract EtherlessSmart {
         );
         balance += amountSentByCaller;
         moveCurrencies(fnRequested.owner, fnRequested.cost);
-        
 
         emit RemoteExec(fnRequested.remoteResource, paramers, identifier);
     }
