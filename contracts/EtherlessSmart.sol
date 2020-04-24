@@ -106,6 +106,7 @@ contract EtherlessSmart {
 
     function getARN(string memory fnName)
         public
+        view
         returns (string memory arn)
     {
         FunctionsStorage.Function memory fn = findFunction(fnName);
