@@ -89,7 +89,7 @@ contract FunctionsStorage {
 
     function findIndexName(string[] memory array, string memory functionName)
         public
-        view
+        pure
         returns (uint256 index)
     {
         uint256 index = 0;
