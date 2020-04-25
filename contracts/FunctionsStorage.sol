@@ -78,20 +78,32 @@ contract FunctionsStorage {
         return results;
     }
 
-    function setFunction(string memory fnName,
-        string memory description,
-        string memory prototype,
-        uint256 cost
-        )
+    function setFunctionProperty(string memory fnName,
+        string memory parameter,
+        string memory substitute)
         public
-        {
+    {
         if (!existsFunction(fnName)) {
             revert("Function doesn't exist");
         }
-        deployedFunctions[fnName].description = description;
-        deployedFunctions[fnName].prototype = prototype;
-        deployedFunctions[fnName].cost = cost;
-        }
+        if(!ifPropertyExists(parameter)) revert("Property doesn't exist");
+        bool success = true;
+        if(Utils.compareStrings(parameter, "cost")) (success, deployedFunctions[fnName].cost) = Utils.stringToUint(substitute);
+        else if(Utils.compareStrings(parameter, "description")) deployedFunctions[fnName].description = substitute;
+        else if(Utils.compareStrings(parameter, "prototype")) deployedFunctions[fnName].prototype = substitute;
+        if(!success) revert('Invalid parameter');
+    }
+
+    function ifPropertyExists(string memory parameter)
+        public
+        pure
+        returns (bool exist)
+    {
+        if(Utils.compareStrings(parameter, "cost")) return true;
+        else if(Utils.compareStrings(parameter, "description")) return true;
+        else if(Utils.compareStrings(parameter, "prototype")) return true;
+        else return false;
+    }
 
     function costOfFunction(string memory fnName)
         public
