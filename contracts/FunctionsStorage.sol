@@ -83,9 +83,7 @@ contract FunctionsStorage {
         string memory substitute)
         public
     {
-        if (!existsFunction(fnName)) {
-            revert("Function doesn't exist");
-        }
+        if (!existsFunction(fnName)) revert("Function doesn't exist");
         if(!ifPropertyExists(parameter)) revert("Property doesn't exist");
         bool success = true;
         if(Utils.compareStrings(parameter, "cost")) (success, deployedFunctions[fnName].cost) = Utils.stringToUint(substitute);
@@ -99,10 +97,11 @@ contract FunctionsStorage {
         pure
         returns (bool exist)
     {
-        if(Utils.compareStrings(parameter, "cost")) return true;
-        else if(Utils.compareStrings(parameter, "description")) return true;
-        else if(Utils.compareStrings(parameter, "prototype")) return true;
-        else return false;
+        bool exist = false;
+        if(Utils.compareStrings(parameter, "cost")) exist = true;
+        else if(Utils.compareStrings(parameter, "description")) exist = true;
+        else if(Utils.compareStrings(parameter, "prototype")) exist = true;
+        return exist;
     }
 
     function costOfFunction(string memory fnName)

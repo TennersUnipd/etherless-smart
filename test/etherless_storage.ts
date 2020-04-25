@@ -4,8 +4,15 @@ contract("FunctionsStorage", (accounts) => {
     const [bob] = accounts;
 
     it("at start, storage should be empty", async () => {
-        let storage = await FunctionsStorage.deployed();
-        let functions = await storage.getFunctions();
+        let storage;
+        let functions;
+        try{
+            storage = await FunctionsStorage.deployed();
+            functions = await storage.getFunctions();
+        }
+        catch(Exception){
+            assert.fail();
+        }
         assert.equal(functions.length, 0, "Storage is not empty");
     });
 
@@ -93,4 +100,38 @@ contract("FunctionsStorage", (accounts) => {
         }        
     });
 
+    it("[setFunctionProperty] should modify a parameter string of the function", async () => {
+        let functionName = "test_set_function_property_string";
+        let param="description";
+        let subst="bho";
+        let instance = await FunctionsStorage.deployed();
+        const fn = await instance.buildFunction(functionName, "description", "proto", "20", "remote", bob);
+        await instance.storeFunction(fn);
+        try{
+            await instance.setFunctionProperty(functionName, param, subst);
+            const fn2 = await instance.getFunctionDetails(functionName);
+            assert.equal(fn2.description, subst, "Function description unchanged");
+        }
+        catch {
+            assert.fail("Errore interno di setFunctionProperty");
+        }
+    })
+
+    it("[setFunctionProperty] should modify a parameter uint256 of the function", async () => {
+        let functionName = "test_set_function_property_uint";
+        let param="cost";
+        let subst="15";
+        let subst2=15;
+        let instance = await FunctionsStorage.deployed();
+        const fn = await instance.buildFunction(functionName, "description", "proto", "20", "remote", bob);
+        await instance.storeFunction(fn);
+        try{
+            await instance.setFunctionProperty(functionName, param, subst);
+            const fn2 = await instance.getFunctionDetails(functionName);
+            assert.equal(fn2.cost, subst2, "Function cost unchanged");
+        }
+        catch {
+            assert.fail("Errore interno di setFunctionProperty");
+        }
+    })
 });
