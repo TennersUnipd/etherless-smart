@@ -113,12 +113,13 @@ contract FunctionsStorage {
         }
         uint256 indexUser = findIndexName(userFunctionNames[userAddress], functionName);
         uint256 lengthUser = userFunctionNames[userAddress].length;
-        userFunctionNames[userAddress][indexUser] = userFunctionNames[userAddress][lengthUser];
+        string[] memory userFunctions = userFunctionNames[userAddress];
+        userFunctions[indexUser] = userFunctionNames[userAddress][lengthUser-1];
         userFunctionNames[userAddress].pop();
 
         uint256 indexAvailable = findIndexName(availableFunctionNames, functionName);
         uint256 lengthAvailable = availableFunctionNames.length;
-        availableFunctionNames[indexAvailable] = availableFunctionNames[lengthAvailable];
+        availableFunctionNames[indexAvailable] = availableFunctionNames[lengthAvailable-1];
         availableFunctionNames.pop();
 
         delete deployedFunctions[functionName];
