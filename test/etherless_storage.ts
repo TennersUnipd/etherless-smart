@@ -100,6 +100,7 @@ contract("FunctionsStorage", (accounts) => {
         }        
     });
 
+
     it("[setFunctionProperty] should modify a parameter string of the function", async () => {
         let functionName = "test_set_function_property_string";
         let param="description";
@@ -134,4 +135,20 @@ contract("FunctionsStorage", (accounts) => {
             assert.fail("Errore interno di setFunctionProperty");
         }
     })
+    it("[deleteFunctions] should delete correctly a function", async () => {
+        const functionName = "test_name_insert_fn";
+        const instance = await FunctionsStorage.deployed();
+        const fn = await instance.buildFunction(functionName, "ciao", "test", 10, "remote", bob);
+        await instance.storeFunction(fn);
+        const array1 = await instance.getFunctions();
+        try {
+            await instance.deleteFunction(bob, functionName);
+            const array2 = await instance.getFunctions();
+            const index = array2.indexOf(fn);
+            assert.equal(index, -1, "Function still exists");
+        } catch{
+            assert.fail("Function not found even if it was created");
+        }
+    });
+
 });
