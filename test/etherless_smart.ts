@@ -143,6 +143,40 @@ contract("EtherlessSmart", (accounts) => {
         assert(bobFinalBalance > bobInitialBalance + cost, "Bob did not receive all the money he deserves");
         assert(aliceFinalBalance < aliceInitialBalance - cost, "Alice did not pay");
     });
+
+
+    it("[setFunctionProperty] should modify a parameter string of the function", async () => {
+        let functionName = "test_set_function_property_string";
+        let param="description";
+        let subst="bho";
+        let instance = await EtherlessSmart.deployed();
+        await instance.createFunction(functionName, "description", "proto", "remote", 20);
+        try{
+            await instance.setFunctionProperty(functionName, param, subst);
+            const fn2 = await instance.findFunction(functionName);
+            assert.equal(fn2.description, subst, "Function description unchanged");
+        }
+        catch {
+            assert.fail("Errore interno di setFunctionProperty");
+        }
+    });
+
+    it("[setFunctionProperty] should modify a parameter uint of the function", async () => {
+        let functionName = "test_set_function_property_uint";
+        let param="cost";
+        let subst="25";
+        let subst2=25;
+        let instance = await EtherlessSmart.deployed();
+        await instance.createFunction(functionName, "description", "proto", "remote", 20);
+        try{
+            await instance.setFunctionProperty(functionName, param, subst);
+            const fn2 = await instance.findFunction(functionName);
+            assert.equal(fn2.cost, subst2+10, "Function cost unchanged");
+        }
+        catch {
+            assert.fail("Errore interno di setFunctionProperty");
+        }
+    });
     it("[deleteFunctions] should delete correctly a function", async () => {
         const functionName = "test_name_insert_fn";
         const instance = await EtherlessSmart.deployed();
@@ -155,5 +189,4 @@ contract("EtherlessSmart", (accounts) => {
             assert.ok(true);
         }
     });
-
 });

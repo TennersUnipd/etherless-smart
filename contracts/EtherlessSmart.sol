@@ -93,6 +93,14 @@ contract EtherlessSmart {
         emit RemoteExec(fnRequested.remoteResource, paramers, identifier);
     }
 
+    function setFunctionProperty(string memory fnName,
+        string memory parameter,
+        string memory substitute)
+        public
+    {
+        fnStorage.setFunctionProperty(fnName, parameter, substitute);
+    }
+
     function deleteFunction(string memory nameFunction)
         public
     {
