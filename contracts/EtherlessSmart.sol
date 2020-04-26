@@ -111,7 +111,7 @@ contract EtherlessSmart {
         fnStorage.deleteFunction(fn.owner, nameFunction);
     }
 
-    function getARN(string memory fnName)
+    function getArn(string memory fnName)
         public
         view
         returns (string memory arn)

@@ -189,4 +189,13 @@ contract("EtherlessSmart", (accounts) => {
             assert.ok(true);
         }
     });
+
+    it("[getArn] should return the ARN of a function", async () => {
+        const functionName = "test_name_get_arn";
+        const instance = await EtherlessSmart.deployed();
+        await instance.createFunction(functionName, "ciao", "test", "test", 10);
+        const arn = await instance.getArn(functionName);
+        const fn = await instance.findFunction(functionName);
+        assert.equal(arn, fn.remoteResource, "Different arn");
+    });
 });
