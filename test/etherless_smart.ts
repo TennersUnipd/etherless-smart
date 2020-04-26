@@ -143,4 +143,17 @@ contract("EtherlessSmart", (accounts) => {
         assert(bobFinalBalance > bobInitialBalance + cost, "Bob did not receive all the money he deserves");
         assert(aliceFinalBalance < aliceInitialBalance - cost, "Alice did not pay");
     });
+    it("[deleteFunctions] should delete correctly a function", async () => {
+        const functionName = "test_name_insert_fn";
+        const instance = await EtherlessSmart.deployed();
+        await instance.createFunction(functionName, "ciao", "test", "test", 10);
+        await instance.deleteFunction(functionName);
+        try {
+            const bool = await instance.findFunction(functionName);
+            assert.fail("Function not deleted");
+        } catch {
+            assert.ok(true);
+        }
+    });
+
 });

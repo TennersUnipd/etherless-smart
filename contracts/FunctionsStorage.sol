@@ -17,7 +17,7 @@ contract FunctionsStorage {
     mapping(string => Function) private deployedFunctions; // <nome funzione> -> <Function>
     string[] private availableFunctionNames;
     mapping(address => string[]) private userFunctionNames;
-
+    
     function getFunctionDetails(string memory functionToSearch)
         public
         view
@@ -57,7 +57,7 @@ contract FunctionsStorage {
     {
         // check if function already exists before adding it to the availableFunctionNames
         if (existsFunction(fn.name)) {
-            revert("Function already exits and cannot be created");
+            revert("Function already exist and cannot be created");
         }
         // check if another funcion is already linked to remote resource
         deployedFunctions[fn.name] = fn;
@@ -85,6 +85,44 @@ contract FunctionsStorage {
     {
         Function memory fnRequested = getFunctionDetails(fnName);
         return fnRequested.cost;
+    }
+
+    function findIndexName(string[] memory array, string memory functionName)
+        public
+        pure
+        returns (uint256 index)
+    {
+        uint256 index = 0;
+        bool find = false;
+        for (uint256 i = 0; i<array.length && !find; i++){
+            if(Utils.compareStrings(array[i],functionName)){
+                index = i;
+                find = true;
+            }
+        }
+        if(find) return index;
+        revert('Function not found');
+    }
+
+    function deleteFunction(address userAddress, string memory functionName)
+        public
+    {
+        // check if function already exists before delete it to the availableFunctionNames
+        if (!existsFunction(functionName)) {
+            revert("Function doesn't exist");
+        }
+        uint256 indexUser = findIndexName(userFunctionNames[userAddress], functionName);
+        uint256 lengthUser = userFunctionNames[userAddress].length;
+        string[] memory userFunctions = userFunctionNames[userAddress];
+        userFunctions[indexUser] = userFunctionNames[userAddress][lengthUser-1];
+        userFunctionNames[userAddress].pop();
+
+        uint256 indexAvailable = findIndexName(availableFunctionNames, functionName);
+        uint256 lengthAvailable = availableFunctionNames.length;
+        availableFunctionNames[indexAvailable] = availableFunctionNames[lengthAvailable-1];
+        availableFunctionNames.pop();
+
+        delete deployedFunctions[functionName];
     }
 
     function buildFunction(
