@@ -98,9 +98,10 @@ contract FunctionsStorage {
         returns (bool exist)
     {
         bool exist = false;
-        if(Utils.compareStrings(parameter, "cost")) exist = true;
-        else if(Utils.compareStrings(parameter, "description")) exist = true;
-        else if(Utils.compareStrings(parameter, "prototype")) exist = true;
+        string[3] memory parameters = ["cost", "description", "prototype"];
+        for(uint i = 0; i<parameters.length && !exist; ++i){
+            if(Utils.compareStrings(parameter, parameters[i])) exist = true;
+        }
         return exist;
     }
 
