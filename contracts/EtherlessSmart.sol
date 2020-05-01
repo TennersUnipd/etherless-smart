@@ -98,6 +98,10 @@ contract EtherlessSmart {
         string memory substitute)
         public
     {
+        FunctionsStorage.Function memory fn = findFunction(fnName);
+        if(msg.sender != fn.owner){
+            revert('You are not the owner of the function!');
+        }
         fnStorage.setFunctionProperty(fnName, parameter, substitute);
     }
 

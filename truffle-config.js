@@ -24,8 +24,9 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
-const HDWalletProvider = require("@truffle/hdwallet-provider");
-const privateKeys = ["42941C8EDA235C0102C94793F671B2D6B68080A2CCADD5D5248DAFA5B72B94BE"];
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+const privateKeys = ['42941C8EDA235C0102C94793F671B2D6B68080A2CCADD5D5248DAFA5B72B94BE'];
 
 module.exports = {
   /**
@@ -37,13 +38,13 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-  
+
   plugins: [
     'truffle-plugin-verify',
-    "solidity-coverage"
+    'solidity-coverage',
   ],
   api_keys: {
-    etherscan: 'RKVYFCZNF8HW6MSGXFDNIV7E6Q9BZQSSTI'
+    etherscan: 'RKVYFCZNF8HW6MSGXFDNIV7E6Q9BZQSSTI',
   },
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -53,22 +54,22 @@ module.exports = {
     // options below to some value.
     //
     local: {
-      host: "localhost",
+      host: 'localhost',
       port: 8545,
-      network_id: "*", // Match any network id
-      gas: 4600000
+      network_id: '*', // Match any network id
+      gas: 4600000,
     },
     test: {
-      provider: function() {
-        return new HDWalletProvider(privateKeys, "https://ropsten.infura.io/v3/f065353f3ff14efa80c5be0cf4cc6655", 0, 1)
+      provider() {
+        return new HDWalletProvider(privateKeys, 'https://ropsten.infura.io/v3/f065353f3ff14efa80c5be0cf4cc6655', 0, 1);
       },
-      network_id: 3
+      network_id: 3,
     },
     stage: {
-      host: "localhost",
+      host: 'localhost',
       port: 8545,
-      network_id: "*", // Match any network id
-      gas: 4600000
+      network_id: '*', // Match any network id
+      gas: 4600000,
     },
 
     // Another network with more advanced options...
@@ -108,7 +109,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.5.12",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: '0.5.12', // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -117,6 +118,6 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
-  }
-}
+    },
+  },
+};
