@@ -2,8 +2,6 @@ const EtherlessSmart = artifacts.require('EtherlessSmart');
 
 const SERVICE_FEE = 10;
 
-const MockContract = artifacts.require('MockContract.sol');
-
 contract('EtherlessSmart', (accounts) => {
   const [bob, alice] = accounts;
   /*  MOCKING (https://github.com/gnosis/mock-contract)
