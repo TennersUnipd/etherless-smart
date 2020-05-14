@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 
 library Utils {
 
+    // Compares two strings and returns a boolean
     function compareStrings(string memory a, string memory b)
         public
         pure
@@ -12,6 +13,7 @@ library Utils {
             keccak256(abi.encodePacked((b))));
     }
 
+    // Returns a merged string of the 2 given
     function concat(string memory a, string memory b)
         public
         pure
@@ -20,6 +22,7 @@ library Utils {
         return string(abi.encodePacked(a, b));
     }
 
+    // Returns a string rapresentation of the given integer
     function uint2str(uint256 _x)
         public
         pure
@@ -44,6 +47,7 @@ library Utils {
         return string(bstr);
     }
 
+    // Return an integer rapresentation of the given string
     function stringToUint(string memory s)
         public
         pure

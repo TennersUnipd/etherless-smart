@@ -3,8 +3,10 @@ pragma experimental ABIEncoderV2;
 
 import { Utils } from './Utils.sol';
 
+// A contract used for storing and handling stored functions
 contract FunctionsStorage {
 
+    // Rapresents a functino with all its properties to be stored
     struct Function {
         string name;
         string description;
@@ -14,10 +16,12 @@ contract FunctionsStorage {
         string remoteResource;
     }
 
-    mapping(string => Function) private deployedFunctions; // <nome funzione> -> <Function>
+    mapping(string => Function) private deployedFunctions; // <function name> -> <Function>
     string[] private availableFunctionNames;
-    mapping(address => string[]) private userFunctionNames;
+    mapping(address => string[]) private userFunctionNames; // <owner address> -> <owned functions array>
     
+    // Retrieves details for a given function
+    // If name is invalid, a function not found error is triggered
     function getFunctionDetails(string memory functionToSearch)
         public
         view
@@ -30,6 +34,7 @@ contract FunctionsStorage {
         return deployedFunctions[availableFunctionNames[index]];
     }
 
+    // Searches for the position of a function
     function indexOfFunction(string memory named)
         private
         view
@@ -42,7 +47,7 @@ contract FunctionsStorage {
         return(0,false);
     }
 
-    // check if function with given name exists and return true or false
+    // Checks if function with given name exists
     function existsFunction(string memory named)
         public
         view
@@ -52,6 +57,8 @@ contract FunctionsStorage {
         return exists;
     }
 
+    // Stores a new function
+    // This should be the only way to add a new function to the storage as it ensures all storage variable are correctly manipulated
     function storeFunction(Function memory fn)
         public
     {
@@ -65,6 +72,7 @@ contract FunctionsStorage {
         userFunctionNames[fn.owner].push(fn.name);
     }
 
+    // Returns a list of all functions available
     function getFunctions()
         public
         view
@@ -78,6 +86,7 @@ contract FunctionsStorage {
         return results;
     }
 
+    // Updates a function property
     function setFunctionProperty(string memory fnName,
         string memory parameter,
         string memory substitute)
@@ -92,6 +101,7 @@ contract FunctionsStorage {
         if(!success) revert('Invalid parameter');
     }
 
+    // Checks if a given propery name matches one that is part of the function
     function ifPropertyExists(string memory parameter)
         public
         pure
@@ -105,6 +115,7 @@ contract FunctionsStorage {
         return exist;
     }
 
+    // Return the function cost set by the user
     function costOfFunction(string memory fnName)
         public
         view
@@ -114,6 +125,7 @@ contract FunctionsStorage {
         return fnRequested.cost;
     }
 
+    // Searches for the position of a function
     function findIndexName(string[] memory array, string memory functionName)
         public
         pure
@@ -131,6 +143,8 @@ contract FunctionsStorage {
         revert('Function not found');
     }
 
+    // Removes a function from the storage permanently
+    // This should be the only way to remove a function to the storage as it ensures all storage variable are correctly manipulated
     function deleteFunction(address userAddress, string memory functionName)
         public
     {
@@ -152,6 +166,7 @@ contract FunctionsStorage {
         delete deployedFunctions[functionName];
     }
 
+    // Creates a Functino structure from the individual properties
     function buildFunction(
         string memory name,
         string memory description,
