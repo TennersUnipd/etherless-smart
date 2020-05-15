@@ -25,10 +25,14 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "solidity-coverage": "^0.7.2"
+    "solidity-coverage": "^0.7.2",
+    "ts-mockito": "^2.5.0"
   },
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.0.33",
-    "truffle-plugin-verify": "^0.3.9"
+    "@types/jest": "^25.2.1",
+    "@types/mocha": "^7.0.2",
+    "truffle-plugin-verify": "^0.3.9",
+    "typescript": "^3.6.5"
   }
 }
